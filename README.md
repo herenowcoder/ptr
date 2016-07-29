@@ -1,8 +1,15 @@
 ## ptr
 
-`./ptr.py my sentence`
+Google translator script.
+
+```
+% pip3 install .  # (no pypi yet)
+[...]
+% ptr my sentence
+moje zdanie
+```
 
 It requires `phantomjs` >= 2.0 to be present in the path.
 
-Additionally, if you have it already running on its standard port,
-it will be detected and used (speeds up the script by 1-2s).
+Note it leaves `phantomjs` detached for subsequent runs,
+it offers some speedup.
