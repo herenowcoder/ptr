@@ -1,9 +1,17 @@
 #!/usr/bin/env python
-from selenium import webdriver
-import sys, time
+from selenium import webdriver as wd
+import sys, time, socket
+
+WD_PORT = 8910
 
 sentence = ' '.join(sys.argv[1:])
-d = webdriver.PhantomJS()
+
+try:
+    socket.create_connection(('localhost', WD_PORT))
+    d = wd.PhantomJS(port=WD_PORT)
+except socket.error:
+    d = wd.PhantomJS()
+
 d.get('http://translate.google.pl/#en/pl')
 d.find_element_by_id('gt-otf-switch').click()
 s = d.find_element_by_id('source')
