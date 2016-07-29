@@ -51,7 +51,11 @@ c = d.find_element_by_id('gt-submit')
 s.clear()
 s.send_keys(sentence)
 c.click()
-while not r.text: time.sleep(0.100)
+
+interval = 0.100
+while not r.text:
+    time.sleep(interval)
+    interval = max(interval*0.95, 0.010)
 
 t1 = time.time()
 
