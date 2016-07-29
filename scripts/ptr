@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from selenium import webdriver as wd
-import sys, time, subprocess
+import sys, time, re, json, subprocess
 from urllib.request import urlopen
 from tempfile import gettempdir
 from getpass import getuser
@@ -12,7 +12,13 @@ WD_URL  = 'http://localhost:%d/status' %WD_PORT
 
 def try_phantom():
     try:
-        return urlopen(WD_URL, timeout=0.010).code == 200
+        resp = urlopen(WD_URL, timeout=0.010)
+        assert resp.code == 200
+        assert re.match(r'application/json\b', resp.headers['content-type'])
+        answer = json.loads(resp.read().decode())
+        for k in ['sessionId', 'status']:
+            assert k in answer.keys()
+        return True
     except:
         return None
 
