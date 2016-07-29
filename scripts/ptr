@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+import time
+t0 = time.time()
+
 from selenium import webdriver as wd
 import sys, time, re, json, subprocess
 from urllib.request import urlopen
@@ -49,4 +52,7 @@ s.clear()
 s.send_keys(sentence)
 c.click()
 while not r.text: time.sleep(0.100)
-print(r.text)
+
+t1 = time.time()
+
+print('[%.2fs] '%(t1-t0+0.050), r.text)

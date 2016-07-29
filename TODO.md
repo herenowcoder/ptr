@@ -1,4 +1,4 @@
 - [ ] options for choosing languages
 - [ ] pypi
-- [ ] show simple timings
+- [x] show simple timings
 - [ ] decreasing intervals when waiting for result
