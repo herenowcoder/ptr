@@ -22,9 +22,6 @@ def try_phantom():
     except:
         return None
 
-
-sentence = ' '.join(sys.argv[1:])
-
 if not try_phantom():
     phantom_logfile = path.join(gettempdir(), 'phantomjs-%s.log' % getuser())
     subprocess.Popen('phantomjs --wd', shell=True,
@@ -41,6 +38,7 @@ if not try_phantom():
     
 d = wd.PhantomJS(port=WD_PORT)
 
+sentence = ' '.join(sys.argv[1:])
 
 d.get('http://translate.google.pl/#en/pl')
 d.find_element_by_id('gt-otf-switch').click()
