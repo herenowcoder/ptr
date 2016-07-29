@@ -1,16 +1,40 @@
 #!/usr/bin/env python3
 from selenium import webdriver as wd
-import sys, time, socket
+import sys, time, subprocess
+from urllib.request import urlopen
+from tempfile import gettempdir
+from getpass import getuser
+from os import path
+
 
 WD_PORT = 8910
+WD_URL  = 'http://localhost:%d/status' %WD_PORT
+
+def try_phantom():
+    try:
+        return urlopen(WD_URL, timeout=0.010).code == 200
+    except:
+        return None
+
 
 sentence = ' '.join(sys.argv[1:])
 
-try:
-    socket.create_connection(('localhost', WD_PORT))
-    d = wd.PhantomJS(port=WD_PORT)
-except socket.error:
-    d = wd.PhantomJS()
+if not try_phantom():
+    phantom_logfile = path.join(gettempdir(), 'phantomjs-%s.log' % getuser())
+    subprocess.Popen('phantomjs --wd', shell=True,
+                     stdout=subprocess.DEVNULL,
+                     stderr=open(phantom_logfile,'a'))
+    interval = 0.010
+    i, maxtry = 0, 1/interval
+    while True:
+        time.sleep(interval)
+        if try_phantom(): break
+        i += 1
+        if i > maxtry:
+            raise SystemExit('cant connect to phantomjs on %s' %WD_URL)
+    
+d = wd.PhantomJS(port=WD_PORT)
+
 
 d.get('http://translate.google.pl/#en/pl')
 d.find_element_by_id('gt-otf-switch').click()
