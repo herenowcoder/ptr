@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from selenium import webdriver as wd
 import sys, time, socket
 
