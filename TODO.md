@@ -3,3 +3,4 @@
 - [x] show simple timings
 - [x] decreasing intervals when waiting for result
   - [ ] also for checking phantomjs on start
+- [ ] bug: creates ghostdriver.log in current dir
