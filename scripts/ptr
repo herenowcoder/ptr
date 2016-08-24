@@ -36,7 +36,7 @@ if not try_phantom():
         time.sleep(interval)
         if try_phantom(): break
         i += 1
-        if i > maxtry:
+        if i >= maxtry:
             raise SystemExit('cant connect to phantomjs on %s' %WD_URL)
     
 d = wd.PhantomJS(port=WD_PORT)
