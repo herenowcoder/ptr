@@ -27,10 +27,11 @@ def try_phantom():
         return None
 
 if not try_phantom():
-    phantom_logfile = path.join(gettempdir(), 'phantomjs-%s.log' % getuser())
+    phantom_err_logfile = path.join(gettempdir(),
+                                    'ptr-phantomjs-err-%s.log' % getuser())
     subprocess.Popen('phantomjs --wd', shell=True,
                      stdout=subprocess.DEVNULL,
-                     stderr=open(phantom_logfile,'a'))
+                     stderr=open(phantom_err_logfile,'a'))
     interval = 0.010
     i, maxtry = 0, 1/interval
     while True:
@@ -41,7 +42,7 @@ if not try_phantom():
             raise SystemExit(
                 "%s: phantomjs at %s:%d not detected after %d tries"
                 "\n\tcheck %s for possible details"
-                %(sys.argv[0], WD_HOST, WD_PORT, i, phantom_logfile))
+                %(sys.argv[0], WD_HOST, WD_PORT, i, phantom_err_logfile))
     
 d = wd.PhantomJS(port=WD_PORT)
 
