@@ -10,8 +10,9 @@ from getpass import getuser
 from os import path
 
 
+WD_HOST = 'localhost'
 WD_PORT = 8910
-WD_URL  = 'http://localhost:%d/status' %WD_PORT
+WD_URL  = 'http://%s:%d/status' %(WD_HOST, WD_PORT)
 
 def try_phantom():
     try:
