@@ -38,7 +38,10 @@ if not try_phantom():
         if try_phantom(): break
         i += 1
         if i >= maxtry:
-            raise SystemExit('cant connect to phantomjs on %s' %WD_URL)
+            raise SystemExit(
+                "%s: phantomjs at %s:%d not detected after %d tries"
+                "\n\tcheck %s for possible details"
+                %(sys.argv[0], WD_HOST, WD_PORT, i, phantom_logfile))
     
 d = wd.PhantomJS(port=WD_PORT)
 
