@@ -12,7 +12,8 @@ from os import path
 
 WD_HOST = 'localhost'
 WD_PORT = 8910
-WD_URL  = 'http://%s:%d/status' %(WD_HOST, WD_PORT)
+WD_URL  = 'http://%s:%d/status' % (WD_HOST, WD_PORT)
+
 
 def try_phantom():
     try:
@@ -25,6 +26,7 @@ def try_phantom():
         return True
     except:
         return None
+
 
 if not try_phantom():
     phantom_err_logfile = path.join(gettempdir(),
@@ -42,8 +44,8 @@ if not try_phantom():
             raise SystemExit(
                 "%s: phantomjs at %s:%d not detected after %d tries"
                 "\n\tcheck %s for possible details"
-                %(sys.argv[0], WD_HOST, WD_PORT, i, phantom_err_logfile))
-    
+                % (sys.argv[0], WD_HOST, WD_PORT, i, phantom_err_logfile))
+
 d = wd.PhantomJS(port=WD_PORT)
 
 sentence = ' '.join(sys.argv[1:])
@@ -64,4 +66,4 @@ while not r.text:
 
 t1 = time.time()
 
-print('[%.2fs] '%(t1-t0+0.050), r.text)
+print('[%.2fs] ' % (t1-t0+0.050), r.text)
