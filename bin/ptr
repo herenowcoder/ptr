@@ -53,9 +53,9 @@ sentence = ' '.join(sys.argv[1:])
 driver.get('http://translate.google.pl/#en/pl')
 driver.find_element_by_id('gt-otf-switch').click()
 
-source = driver.find_element_by_id('source')
-result = driver.find_element_by_id('result_box')
-submit = driver.find_element_by_id('gt-submit')
+source, result, submit = map(
+    driver.find_element_by_id,
+    ('source', 'result_box', 'gt-submit'))
 
 source.clear()
 source.send_keys(sentence)
