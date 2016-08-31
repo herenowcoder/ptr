@@ -7,7 +7,7 @@ setup(name='ptr',
       author_email='wojtekk@kofeina.net',
       url='http//:github.com/herenowcoder/ptr',
 
-      scripts=['scripts/ptr'],
+      scripts=['bin/ptr'],
 
       install_requires=['selenium'],
 )
