@@ -3,7 +3,7 @@
 Google translator script.
 
 ```
-% pip3 install .  # (no pypi yet)
+% pip3 install [--user] .  # (no pypi yet)
 [...]
 % ptr my sentence
 moje zdanie
