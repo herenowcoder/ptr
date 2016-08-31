@@ -46,24 +46,26 @@ if not try_phantom():
                 "\n\tcheck %s for possible details"
                 % (sys.argv[0], WD_HOST, WD_PORT, i, phantom_err_logfile))
 
-d = wd.PhantomJS(port=WD_PORT)
+driver = wd.PhantomJS(port=WD_PORT)
 
 sentence = ' '.join(sys.argv[1:])
 
-d.get('http://translate.google.pl/#en/pl')
-d.find_element_by_id('gt-otf-switch').click()
-s = d.find_element_by_id('source')
-r = d.find_element_by_id('result_box')
-c = d.find_element_by_id('gt-submit')
-s.clear()
-s.send_keys(sentence)
-c.click()
+driver.get('http://translate.google.pl/#en/pl')
+driver.find_element_by_id('gt-otf-switch').click()
+
+source = driver.find_element_by_id('source')
+result = driver.find_element_by_id('result_box')
+submit = driver.find_element_by_id('gt-submit')
+
+source.clear()
+source.send_keys(sentence)
+submit.click()
 
 interval = 0.100
-while not r.text:
+while not result.text:
     time.sleep(interval)
     interval = max(interval*0.95, 0.010)
 
 t1 = time.time()
 
-print('[%.2fs] ' % (t1-t0+0.050), r.text)
+print('[%.2fs] ' % (t1-t0+0.050), result.text)
