@@ -3,6 +3,7 @@ from selenium import webdriver as wd # type: ignore
 import sys, time, re, json, subprocess
 from urllib.request import urlopen
 from tempfile import gettempdir
+from shutil import which # type: ignore, it is not updated to Py3
 from os import path
 
 
@@ -26,8 +27,7 @@ def try_phantom():
 
 if not try_phantom():
     phantom_logfile = open(path.join(gettempdir(), 'phantomjs.log'), 'a')
-    subprocess.Popen('phantomjs --wd --webdriver-loglevel=WARN',
-                     shell=True,
+    subprocess.Popen((which('phantomjs'), '--wd', '--webdriver-loglevel=WARN'),
                      stdout=phantom_logfile,
                      stderr=phantom_logfile)
     interval = 0.010
