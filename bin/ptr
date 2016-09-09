@@ -6,7 +6,6 @@ from selenium import webdriver as wd
 import sys, time, re, json, subprocess
 from urllib.request import urlopen
 from tempfile import gettempdir
-from getpass import getuser
 from os import path
 
 
@@ -29,11 +28,11 @@ def try_phantom():
 
 
 if not try_phantom():
-    phantom_err_logfile = path.join(gettempdir(),
-                                    'ptr-phantomjs-err-%s.log' % getuser())
-    subprocess.Popen('phantomjs --wd', shell=True,
-                     stdout=subprocess.DEVNULL,
-                     stderr=open(phantom_err_logfile,'a'))
+    phantom_logfile = open(path.join(gettempdir(), 'phantomjs.log'), 'a')
+    subprocess.Popen('phantomjs --wd --webdriver-loglevel=WARN',
+                     shell=True,
+                     stdout=phantom_logfile,
+                     stderr=phantom_logfile)
     interval = 0.010
     i, maxtry = 0, 1/interval
     while True:
@@ -44,7 +43,7 @@ if not try_phantom():
             raise SystemExit(
                 "%s: phantomjs at %s:%d not detected after %d tries"
                 "\n\tcheck %s for possible details"
-                % (sys.argv[0], WD_HOST, WD_PORT, i, phantom_err_logfile))
+                % (sys.argv[0], WD_HOST, WD_PORT, i, phantom_logfile))
 
 driver = wd.PhantomJS(port=WD_PORT, service_log_path='/dev/null')
 
