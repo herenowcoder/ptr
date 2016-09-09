@@ -46,7 +46,7 @@ if not try_phantom():
                 "\n\tcheck %s for possible details"
                 % (sys.argv[0], WD_HOST, WD_PORT, i, phantom_err_logfile))
 
-driver = wd.PhantomJS(port=WD_PORT)
+driver = wd.PhantomJS(port=WD_PORT, service_log_path='/dev/null')
 
 sentence = ' '.join(sys.argv[1:])
 
