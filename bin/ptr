@@ -42,9 +42,15 @@ if not try_phantom():
                 "\n\tcheck %s for possible details"
                 % (sys.argv[0], WD_HOST, WD_PORT, i, phantom_logfile))
 
-driver = wd.PhantomJS(port=WD_PORT, service_log_path='/dev/null')
+
+if len(sys.argv[1:]) < 1:
+    print("I need an arg!", file=sys.stderr)
+    sys.exit(2)
+
 
 sentence = ' '.join(sys.argv[1:])
+
+driver = wd.PhantomJS(port=WD_PORT, service_log_path='/dev/null')
 
 driver.get('http://translate.google.pl/#en/pl')
 driver.find_element_by_id('gt-otf-switch').click()
